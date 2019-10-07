@@ -9,7 +9,7 @@ import Foundation
 
 class MarkdownParserCore {
   private enum ParserState {
-    case text, heading1, heading2, imageCaption, imageURL
+    case text, heading1, heading2, imageCaption, imageURL, code
   }
   
   private var state: ParserState = .text
@@ -44,6 +44,29 @@ class MarkdownParserCore {
             state = .imageCaption
             partialBlock = nil
           } else {
+            partialBlock == nil ? partialBlock = Block.textBlock(String(char)) : partialBlock?.string.append(char)
+          }
+        } else if char == "`" {
+          if var partial = partialBlock,
+            partial.string.count >= 2,
+            partial.string[partial.string.index(before: partial.string.endIndex)] == "`",
+            partial.string[partial.string.index(partial.string.endIndex, offsetBy: -2)] == "`" {
+            // if the two previous characters were "`"
+            
+            state = .code
+            
+            if partial.string.count > 2 {
+              // If a codeblock started a line we have collected only "``" which does not need to be stored
+              // else if code is inlined with text let's clean up "``" marks and store the text collected this far
+              let ticksRange = partial.string.index(partial.string.endIndex, offsetBy: -2)..<partial.string.endIndex
+              partial.string.removeSubrange(ticksRange)
+              blocks.append(partial)
+            }
+            partialBlock = nil
+            
+          } else {
+            // "`" scanned, but no code block detected yet.
+            // Let's update .text block and see how the future chars look like.
             partialBlock == nil ? partialBlock = Block.textBlock(String(char)) : partialBlock?.string.append(char)
           }
         } else {
@@ -90,6 +113,29 @@ class MarkdownParserCore {
         } else if char != "(" {
           // Skip the ( in front of URL
           partialBlock?.path == nil ? partialBlock?.path = String(char) : partialBlock?.path?.append(char)
+        }
+      case .code:
+        if var partial = partialBlock,
+          partial.string.count >= 2,
+          partial.string[partial.string.index(before: partial.string.endIndex)] == "`",
+          partial.string[partial.string.index(partial.string.endIndex, offsetBy: -2)] == "`" {
+          // if the two previous characters were "`" remove them
+          let ticksRange = partial.string.index(partial.string.endIndex, offsetBy: -2)..<partial.string.endIndex
+          partial.string.removeSubrange(ticksRange)
+          
+          if partial.string.last == "\n" {
+            // code block has a "\n" as a last character before ending ticks. Remove it
+            partial.string.removeLast()
+          }
+          blocks.append(partial)
+          partialBlock = nil
+        } else {
+          if partialBlock == nil && char != "\n" {
+            // Let's create a partialBlock, but let's not do it if we have just "\n"
+            partialBlock = Block.codeBlock(String(char))
+          } else {
+            partialBlock?.string.append(char)
+          }
         }
       }
     }

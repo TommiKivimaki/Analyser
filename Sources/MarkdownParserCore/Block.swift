@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Block {
-  enum Kind { case text, heading1, heading2, image }
+  enum Kind { case text, heading1, heading2, image, code }
   
   let kind: Kind
   public var string: String
@@ -30,6 +30,10 @@ extension Block {
   
   static func imageBlock(_ string: String) -> Block {
     return Block(kind: .image, string: string)
+  }
+  
+  static func codeBlock(_ string: String) -> Block {
+    return Block(kind: .code, string: string)
   }
 }
 

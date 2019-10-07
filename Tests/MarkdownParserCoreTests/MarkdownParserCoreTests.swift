@@ -89,12 +89,50 @@ final class MarkdownParserCoreTests: XCTestCase {
     XCTAssertEqual(parserCore.output, expectedOutput)
   }
   
+  func testCodeInline() {
+    parserCore.input = """
+                 Text ```code```
+                 """
+    
+    let expectedOutput = [Block(kind: .text, string: "Text "),
+                          Block(kind: .code, string: "code")]
+    XCTAssertEqual(parserCore.output, expectedOutput)
+  }
+  
+  func testCodeBlock() {
+    parserCore.input = """
+                       ```
+                       line 1
+                       line 2
+                       ```
+                       """
+    
+    let expectedOutput = [Block(kind: .code, string: "line 1\nline 2")]
+    XCTAssertEqual(parserCore.output, expectedOutput)
+  }
+  
+  func testEmptyCodeBlock() {
+    parserCore.input = """
+                       ```
+                       ```
+                       """
+    
+    let expectedOutput = [Block(kind: .code, string: "")]
+    XCTAssertEqual(parserCore.output, expectedOutput)
+  }
+  
+  // TODO:- test that text with only one or two "`" marks is still recognized as text and not code.
+  
       static var allTests = [
           ("testTextSingleLine", testTextSingleLine),
           ("testTextMultipleLines", testTextMultipleLines),
           ("testHeadline1SingleLine", testHeadline1SingleLine),
           ("testHeadline1MultipleLines", testHeadline1MultipleLines),
           ("testHeadline2SingleLine", testHeadline2SingleLine),
-          ("testHeadlinesAndText", testHeadlinesAndText)
+          ("testHeadlinesAndText", testHeadlinesAndText),
+          ("testImage", testImage),
+          ("testCodeInline", testCodeInline),
+          ("testCodeBlock", testCodeBlock),
+          ("testEmptyCodeBlock", testEmptyCodeBlock)
       ]
 }
