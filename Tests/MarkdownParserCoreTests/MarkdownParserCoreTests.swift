@@ -35,6 +35,15 @@ final class MarkdownParserCoreTests: XCTestCase {
      XCTAssertEqual(parserCore.output, expectedOutput)
    }
   
+  func testTextWithTicks() {
+    parserCore.input = """
+                       ``
+                       """
+    
+    let expectedOutput = [Block(kind: .text, string: "``")]
+    XCTAssertEqual(parserCore.output, expectedOutput)
+  }
+  
   func testHeadline1SingleLine() {
     parserCore.input = """
                        #Otsikko 1 A
@@ -121,7 +130,6 @@ final class MarkdownParserCoreTests: XCTestCase {
     XCTAssertEqual(parserCore.output, expectedOutput)
   }
   
-  // TODO:- test that text with only one or two "`" marks is still recognized as text and not code.
   
       static var allTests = [
           ("testTextSingleLine", testTextSingleLine),

@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MarkdownParserCore {
+public final class MarkdownParserCore {
   private enum ParserState {
     case text, heading1, heading2, imageCaption, imageURL, code
   }
@@ -123,8 +123,9 @@ class MarkdownParserCore {
           let ticksRange = partial.string.index(partial.string.endIndex, offsetBy: -2)..<partial.string.endIndex
           partial.string.removeSubrange(ticksRange)
           
-          if partial.string.last == "\n" {
-            // code block has a "\n" as a last character before ending ticks. Remove it
+//          if partial.string[partial.string.index(before: partial.string.endIndex)] == "\n" {
+            if partial.string.last == "\n" {
+          // code block has a "\n" as a last character before ending ticks. Remove it
             partial.string.removeLast()
           }
           blocks.append(partial)
@@ -147,55 +148,3 @@ class MarkdownParserCore {
     }
   }
 }
-
-//struct MarkdownParserCore {
-//  public var input: String
-//  public var output = [Block]()
-//  private var state: ParserState
-//  var partial: String = ""
-//
-//  private enum ParserState {
-//    case text
-//    case heading1
-//    case heading2
-//  }
-//
-//  public enum Block {
-//    case text(String)
-//    case heading1(String)
-//    case heading2(String)
-//  }
-//
-//  init(_ input: String) {
-//    self.state = .text
-//    self.input = input
-//  }
-//
-//  mutating func parse() {
-//    input.forEach { char in
-//      switch state {
-//      case .text:
-//        if char == "#" {
-//          state = .heading1
-//        } else if char == "\n" {
-//          let block = Block.text(partial)
-//          output.append(block)
-//          partial = ""
-//          state = .text
-//        } else {
-//          partial.append(char)
-//        }
-//      case .heading1:
-//        if char == "#" {
-//          state = .heading2
-//        } else if char == "\n" {
-//          state = .text
-//        }
-//      case .heading2:
-//        if char == "\n" {
-//          state = .text
-//        }
-//      }
-//    }
-//  }
-//}

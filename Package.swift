@@ -4,11 +4,11 @@
 import PackageDescription
 
 let package = Package(
-  name: "MarkdownParser",
+  name: "Analyser",
   products: [
     .library(
-      name: "MarkdownParser",
-      targets: ["MarkdownParser"]),
+      name: "Analyser",
+      targets: ["Analyser"]),
   ],
   dependencies: [
     // Dependencies declare other packages that this package depends on.
@@ -17,11 +17,11 @@ let package = Package(
   targets: [
     .target(name: "MarkdownParserCore"),
     .target(
-      name: "MarkdownParser",
+      name: "Analyser",
       dependencies: ["MarkdownParserCore"]),
     .testTarget(
       name: "MarkdownParserTests",
-      dependencies: ["MarkdownParser"]),
+      dependencies: ["Analyser"]),
     .testTarget(
       name: "MarkdownParserCoreTests",
       dependencies: ["MarkdownParserCore"]),

@@ -1,5 +1,5 @@
 import XCTest
-@testable import MarkdownParser
+@testable import Analyser
 
 final class MarkdownParserTests: XCTestCase {
     func testExample() {
