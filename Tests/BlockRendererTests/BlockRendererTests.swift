@@ -117,7 +117,7 @@ final class BlockRendererTests: XCTestCase {
       NSAttributedString(string: "I am heading 1", attributes: attrHeading1),
       NSAttributedString(string: "I am text.", attributes: attrText),
       NSAttributedString(string: "I am heading 2", attributes: attrHeading2),
-    NSAttributedString(string: "func passed() -> Bool { return true }", attributes: attrCode)]
+      NSAttributedString(string: "func passed() -> Bool { return true }", attributes: attrCode)]
     
     blockRenderer.input = input
     let result = blockRenderer.renderAsFormattedText()

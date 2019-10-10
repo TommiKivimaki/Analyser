@@ -2,6 +2,8 @@
 
 _Analyser [analize] - to analyze something_
 
-A lightweight markdown parser. Tokenizes some markdown elements. Please check the unit tests for details. 
+Analyser includes ```MarkDownParserCore``` and ```BlockRenderer``` modules. ```MarkDownParserCore``` parses a specific subset of the markdown format. Full details of the markdown format can be found from the [open source guide](https://www.markdownguide.org).
 
-Developed to support content distribution for Camping Finland iOS app.  
+```MarkDownParserCore``` provides  ```[Block]``` type output and ```BlockRenderer``` transforms the blocks into ```NSAttributedStrings```.
+
+This package is developed to support content distribution for Camping Finland iOS app.  
