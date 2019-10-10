@@ -19,11 +19,15 @@ let package = Package(
     .target(
       name: "Analyser",
       dependencies: ["MarkdownParserCore"]),
+    .target(name: "BlockRenderer",
+            dependencies: ["MarkdownParserCore"]),
     .testTarget(
       name: "MarkdownParserTests",
       dependencies: ["Analyser"]),
     .testTarget(
       name: "MarkdownParserCoreTests",
       dependencies: ["MarkdownParserCore"]),
+    .testTarget(name: "BlockRendererTests",
+                dependencies: ["BlockRenderer"])
   ]
 )
