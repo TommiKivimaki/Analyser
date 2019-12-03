@@ -2,8 +2,8 @@
 
 _Analyser [analize] - to analyze something_
 
-Analyser includes ```MarkDownParserCore``` and ```BlockRenderer``` modules. ```MarkDownParserCore``` parses a specific subset of the markdown format. Full details of the markdown format can be found from the [open source guide](https://www.markdownguide.org).
+Analyser includes ```MarkDownParserCore``` and ```BlockRenderer``` modules. ```MarkDownParserCore``` handles only a small and specific subset of the markdown format. If you need a proper markdown spec support you should check Commonmark. 
 
-```MarkDownParserCore``` provides  ```[Block]``` type output and ```BlockRenderer``` transforms the blocks into ```NSAttributedStrings```.
+```MarkDownParserCore``` provides  ```[Block]``` type output and ```BlockRenderer``` transforms the blocks into ```NSAttributedStrings``` and HTML strings.
 
-This package is developed to support content distribution for Camping Finland iOS app.  
+This package is developed for Camping Finland iOS app.  
