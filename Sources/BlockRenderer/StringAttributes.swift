@@ -41,8 +41,9 @@ public struct StringAttributes {
   // For iOS
   #elseif os(iOS)
   
-  public func getStringAttributes(for kind: Block.Kind) -> [NSAttributedString.Key: Any]? {
-    return nil
+  public func get(for kind: Block.Kind) -> [NSAttributedString.Key: Any]? {
+//    return nil
+    return [.font: UIFont.preferredFont(forTextStyle: .body)]
   }
   
   #endif

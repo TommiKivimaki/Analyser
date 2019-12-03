@@ -126,12 +126,113 @@ final class BlockRendererTests: XCTestCase {
     XCTAssertEqual(result, expectedOutput)
   }
   
+  //
+  // HTML Rendering tests
+  //
+  
+  func testHTMLTextRendering() {
+     let input = [Block.textBlock("First block."),
+                  Block.textBlock("Second block."),
+                  Block.textBlock("Third block.")
+     ]
+     
+     let expectedOutput = ["<p>First block.</p>",
+                           "<p>Second block.</p>",
+                           "<p>Third block.</p>"]
+     
+     blockRenderer.input = input
+     let result = blockRenderer.renderAsHTML()
+     
+     XCTAssertNotNil(result)
+     XCTAssertEqual(result, expectedOutput)
+   }
+   
+   
+   func testHTMLHeading1Rendering() {
+     let input = [Block.heading1Block("First block."),
+                  Block.heading1Block("Second block."),
+                  Block.heading1Block("Third block.")
+     ]
+     
+     let expectedOutput = ["<h1>First block.</h1>",
+                           "<h1>Second block.</h1>",
+                           "<h1>Third block.</h1>"]
+     
+     blockRenderer.input = input
+     let result = blockRenderer.renderAsHTML()
+     
+     XCTAssertNotNil(result)
+     XCTAssertEqual(result, expectedOutput)
+   }
+   
+   
+   func testHTMLHeading2Rendering() {
+     let input = [Block.heading2Block("First block."),
+                  Block.heading2Block("Second block."),
+                  Block.heading2Block("Third block.")
+     ]
+     
+     let expectedOutput = ["<h2>First block.</h2>",
+                           "<h2>Second block.</h2>",
+                           "<h2>Third block.</h2>"]
+     
+     blockRenderer.input = input
+     let result = blockRenderer.renderAsHTML()
+     
+     XCTAssertNotNil(result)
+     XCTAssertEqual(result, expectedOutput)
+   }
+   
+   
+   func testHTMLCodeRendering() {
+     let input = [Block.codeBlock("First block."),
+                  Block.codeBlock("Second block."),
+                  Block.codeBlock("Third block.")
+     ]
+     
+     let expectedOutput = ["<pre><code>First block.</code></pre>",
+                           "<pre><code>Second block.</code></pre>",
+                           "<pre><code>Third block.</code></pre>"]
+     
+     blockRenderer.input = input
+     let result = blockRenderer.renderAsHTML()
+     
+     XCTAssertNotNil(result)
+     XCTAssertEqual(result, expectedOutput)
+   }
+   
+
+   func testHTMLMixedTextRendering() {
+     let input = [Block.heading1Block("I am heading 1"),
+                  Block.textBlock("I am text."),
+                  Block.heading2Block("I am heading 2"),
+                  Block.codeBlock("func passed() -> Bool { return true }")
+     ]
+     
+    
+    let expectedOutput = ["<h1>I am heading 1</h1>",
+                          "<p>I am text.</p>",
+                          "<h2>I am heading 2</h2>",
+                          "<pre><code>func passed() -> Bool { return true }</code></pre>"]
+    
+    blockRenderer.input = input
+    let result = blockRenderer.renderAsHTML()
+     
+     XCTAssertNotNil(result)
+     XCTAssertEqual(result, expectedOutput)
+   }
+  
   
   static var allTests = [
     ("testTextRendering", testTextRendering),
     ("testHeading1Rendering", testHeading1Rendering),
     ("testHeading2Rendering", testHeading2Rendering),
     ("testCodeRendering", testCodeRendering),
-    ("testMixedTextRendering", testMixedTextRendering)
+    ("testMixedTextRendering", testMixedTextRendering),
+    ("testHTMLTextRendering", testHTMLTextRendering),
+    ("testHTMLHeading1Rendering", testHTMLHeading1Rendering),
+    ("testHTMLHeading2Rendering", testHTMLHeading2Rendering),
+    ("testHTMLCodeRendering", testHTMLCodeRendering),
+    ("testHTMLMixedTextRendering", testHTMLMixedTextRendering)
   ]
 }

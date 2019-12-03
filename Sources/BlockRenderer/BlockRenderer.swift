@@ -17,6 +17,7 @@ import UIKit
 public final class BlockRenderer {
   public var input = [Block]()
   private var output = [NSAttributedString]()
+  private var outputHTML = [String]()
   
   public func renderAsFormattedText() -> [NSAttributedString]? {
     input.forEach { block in
@@ -24,5 +25,13 @@ public final class BlockRenderer {
     }
     
     return output
+  }
+  
+  public func renderAsHTML() -> [String]? {
+    input.forEach { block in
+      outputHTML.append(block.makeHTML())
+    }
+    
+    return outputHTML
   }
 }
