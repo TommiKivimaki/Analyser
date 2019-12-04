@@ -15,19 +15,22 @@ let package = Package(
     // .package(url: /* package url */, from: "1.0.0"),
   ],
   targets: [
-    .target(name: "MarkdownParserCore"),
+    .target(
+      name: "MarkdownParserCore"),
     .target(
       name: "Analyser",
+      dependencies: ["MarkdownParserCore", "BlockRenderer"]),
+    .target(
+      name: "BlockRenderer",
       dependencies: ["MarkdownParserCore"]),
-    .target(name: "BlockRenderer",
-            dependencies: ["MarkdownParserCore"]),
     .testTarget(
       name: "MarkdownParserTests",
       dependencies: ["Analyser"]),
     .testTarget(
       name: "MarkdownParserCoreTests",
       dependencies: ["MarkdownParserCore"]),
-    .testTarget(name: "BlockRendererTests",
-                dependencies: ["BlockRenderer"])
+    .testTarget(
+      name: "BlockRendererTests",
+      dependencies: ["BlockRenderer"])
   ]
 )
