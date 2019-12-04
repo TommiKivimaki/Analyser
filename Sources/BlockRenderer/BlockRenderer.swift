@@ -15,9 +15,14 @@ import UIKit
 #endif
 
 public final class BlockRenderer {
-  public var input = [Block]()
+  public var input = [Block]() // FIXME: Make private. Tests need updating then
   private var output = [NSAttributedString]()
   private var outputHTML = [String]()
+  
+  
+  public init(_ blocks: [Block]) {
+    self.input = blocks
+  }
   
   public func renderAsFormattedText() -> [NSAttributedString]? {
     input.forEach { block in

@@ -22,9 +22,12 @@ public final class MarkdownParserCore {
   private var blocks = [Block]()
   private var partialBlock: Block?
   
-  init(input: String?) {
+  
+  public init(input: String?) {
     self.input = input
   }
+  
+  
   
   func tokenize() {
     guard let input = input else { return }

@@ -14,7 +14,7 @@ final class BlockRendererTests: XCTestCase {
   var blockRenderer: BlockRenderer!
   
   override func setUp() {
-    blockRenderer = BlockRenderer()
+    blockRenderer = BlockRenderer([])
   }
   
   override func tearDown() {
