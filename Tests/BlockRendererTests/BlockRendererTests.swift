@@ -221,7 +221,30 @@ final class BlockRendererTests: XCTestCase {
      XCTAssertNotNil(result)
      XCTAssertEqual(result, expectedOutput)
    }
+
   
+  func testHTMLImageRendering() {
+    var image = Block.imageBlock("Image caption")
+    image.path = "https://testurl"
+    
+    let input = [Block.heading1Block("I am heading 1"),
+                 Block.textBlock("I am text."),
+                 image,
+                 Block.textBlock("Just a text")
+    ]
+    
+   
+   let expectedOutput = ["<h1>I am heading 1</h1>",
+                         "<p>I am text.</p>",
+                         "<img src=\"https://testurl\" alt=\"Image caption\">",
+                         "<p>Just a text</p>"]
+   
+   blockRenderer.input = input
+   let result = blockRenderer.renderAsHTML()
+    
+    XCTAssertNotNil(result)
+    XCTAssertEqual(result, expectedOutput)
+  }
   
   static var allTests = [
     ("testTextRendering", testTextRendering),

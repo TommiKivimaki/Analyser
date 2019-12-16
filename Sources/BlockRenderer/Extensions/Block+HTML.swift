@@ -20,8 +20,7 @@ extension Block {
     case .code:
       return "<pre><code>\(self.string)</code></pre>"
     case .image:
-      // TODO: Not implemented
-      return ""
+      return "<img src=\"\(self.path ?? "")\" alt=\"\(self.string)\">"
     }
   }
 }
