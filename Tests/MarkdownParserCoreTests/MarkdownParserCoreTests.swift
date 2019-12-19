@@ -53,14 +53,23 @@ final class MarkdownParserCoreTests: XCTestCase {
     XCTAssertEqual(parserCore.output, expectedOutput)
   }
   
-  func testHeadline1MultipleLines() {
+  func testHeadline1SingleLineTrimmingWhiteSpace() {
     parserCore.input = """
-                       #Headline
+                       # Otsikko 1 A
+                       """
+    
+    let expectedOutput = [Block(kind: .heading1, string: "Otsikko 1 A")]
+    XCTAssertEqual(parserCore.output, expectedOutput)
+  }
+  
+  func testHeadline1MultipleLinesTrimmingWhiteSpace() {
+    parserCore.input = """
+                       # Headline
                        # Headline 2
                        """
     
     let expectedOutput = [Block(kind: .heading1, string: "Headline"),
-                          Block(kind: .heading1, string: " Headline 2")]
+                          Block(kind: .heading1, string: "Headline 2")]
     XCTAssertEqual(parserCore.output, expectedOutput)
   }
   
@@ -72,6 +81,16 @@ final class MarkdownParserCoreTests: XCTestCase {
     let expectedOutput = [Block(kind: .heading2, string: "Headline number two")]
     XCTAssertEqual(parserCore.output, expectedOutput)
   }
+  
+  
+  func testHeadline2SingleLineTrimmingWhiteSpace() {
+     parserCore.input = """
+                        ##  Headline number two
+                        """
+     
+     let expectedOutput = [Block(kind: .heading2, string: "Headline number two")]
+     XCTAssertEqual(parserCore.output, expectedOutput)
+   }
   
   func testHeadlinesAndText() {
     parserCore.input = """
@@ -135,8 +154,10 @@ final class MarkdownParserCoreTests: XCTestCase {
           ("testTextSingleLine", testTextSingleLine),
           ("testTextMultipleLines", testTextMultipleLines),
           ("testHeadline1SingleLine", testHeadline1SingleLine),
-          ("testHeadline1MultipleLines", testHeadline1MultipleLines),
+          ("testHeadline1SingleLineTrimmingWhiteSpace", testHeadline1SingleLineTrimmingWhiteSpace),
+          ("testHeadline1MultipleLinesTrimmingWhiteSpace", testHeadline1MultipleLinesTrimmingWhiteSpace),
           ("testHeadline2SingleLine", testHeadline2SingleLine),
+          ("testHeadline2SingleLineTrimmingWhiteSpace", testHeadline2SingleLineTrimmingWhiteSpace),
           ("testHeadlinesAndText", testHeadlinesAndText),
           ("testImage", testImage),
           ("testCodeInline", testCodeInline),

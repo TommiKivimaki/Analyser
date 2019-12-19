@@ -82,8 +82,10 @@ public final class MarkdownParserCore {
         } else if char == "\n" {
           state = .text
           if let partial = partialBlock {
-             blocks.append(partial)
-             partialBlock = nil
+            let trimmedPartial = Block.init(kind: partial.kind, string: partial.string.trimmingCharacters(in: .whitespaces))
+            blocks.append(trimmedPartial)
+            //            blocks.append(partial)
+            partialBlock = nil
            }
         } else {
           partialBlock == nil ? partialBlock = Block.heading1Block(String(char)) : partialBlock?.string.append(char)
@@ -92,8 +94,10 @@ public final class MarkdownParserCore {
         if char == "\n" {
           state = .text
           if let partial = partialBlock {
-             blocks.append(partial)
-             partialBlock = nil
+            let trimmedPartial = Block.init(kind: partial.kind, string: partial.string.trimmingCharacters(in: .whitespaces))
+            blocks.append(trimmedPartial)
+//             blocks.append(partial)
+            partialBlock = nil
            }
         } else {
           partialBlock == nil ? partialBlock = Block.heading2Block(String(char)) : partialBlock?.string.append(char)
@@ -144,9 +148,16 @@ public final class MarkdownParserCore {
       }
     }
     
-    // If there's something in partial block after the processing is over let's copy it to output
+    // If there's something in partial block after the processing is over (there's no more input characters) let's copy it to output
     if let partial = partialBlock {
-      blocks.append(partial)
+      // Trim white space from headings
+      if partial.kind == .heading1 || partial.kind == .heading2 {
+        let trimmedPartial = Block.init(kind: partial.kind, string: partial.string.trimmingCharacters(in: .whitespaces))
+        blocks.append(trimmedPartial)
+      } else {
+        blocks.append(partial)
+      }
+  
       partialBlock = nil
     }
   }
