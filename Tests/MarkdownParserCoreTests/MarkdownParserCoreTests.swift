@@ -117,6 +117,21 @@ final class MarkdownParserCoreTests: XCTestCase {
     XCTAssertEqual(parserCore.output, expectedOutput)
   }
   
+  func testImageInContent() {
+    parserCore.input = """
+                       # Heading
+                       ![image](link)
+                       
+                       Text after image.
+                       """
+    
+    let expectedOutput = [
+      Block(kind: .heading1, string: "Heading"),
+      Block(kind: .image, string: "image", path: "link"),
+      Block(kind: .text, string: "Text after image.")]
+    XCTAssertEqual(parserCore.output, expectedOutput)
+  }
+  
   func testCodeInline() {
     parserCore.input = """
                  Text ```code```
@@ -160,6 +175,7 @@ final class MarkdownParserCoreTests: XCTestCase {
           ("testHeadline2SingleLineTrimmingWhiteSpace", testHeadline2SingleLineTrimmingWhiteSpace),
           ("testHeadlinesAndText", testHeadlinesAndText),
           ("testImage", testImage),
+          ("testImageInContent", testImageInContent),
           ("testCodeInline", testCodeInline),
           ("testCodeBlock", testCodeBlock),
           ("testEmptyCodeBlock", testEmptyCodeBlock)

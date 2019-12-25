@@ -113,6 +113,7 @@ public final class MarkdownParserCore {
       case .imageURL:
         if char == ")" {
           // end of url
+          state = .text
           if let partial = partialBlock {
             blocks.append(partial)
             partialBlock = nil
